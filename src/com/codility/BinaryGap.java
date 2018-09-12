@@ -26,35 +26,61 @@ package com.codility;
 //N is an integer within the range [1..2,147,483,647].
 
 
-import java.util.stream.Stream;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class BinaryGap {
-    public int solution(int N) {
-        return Stream
-                .of(
-                        // integer to binary string
-                        Integer.toBinaryString(N)
-                                // trim 0(s) at the end
-                                .replaceAll("0+$", "")
-                                // split string with 1(s)
-                                .split("1+"))
-                // lambda expressions: use filter to keep not null elements
-                .filter(a -> a != null)
-                // method references: convert string to integer by using the
-                // length of string
-                .map(String::length)
-                // method references: find the largest number in the stream by
-                // using integer comparator
-                .max(Integer::compare)
-                // return 0 if nothing matches after the process
-                .orElse(0);
+
+    @Test
+    public void shouldReturnTwoWhenInputNine(){
+        assertEquals(2,new BinaryGap().solution(9));
     }
 
-    public static void main(String[] args) {
-        System.out.println(new BinaryGap().solution(9));
-        System.out.println(new BinaryGap().solution(529));
-        System.out.println(new BinaryGap().solution(20));
-        System.out.println(new BinaryGap().solution(15));
-        System.out.println(new BinaryGap().solution(32));
+    @Test
+    public void shouldReturnFourWhenInputFiveHundredTwentyNine(){
+        assertEquals(4,new BinaryGap().solution(529));
+    }
+
+    @Test
+    public void shouldReturnOneWhenInputTwenty(){
+        assertEquals(1,new BinaryGap().solution(20));
+    }
+
+    @Test
+    public void shouldReturnZeroWhenInputFifteen(){
+        assertEquals(0,new BinaryGap().solution(15));
+    }
+
+    @Test
+    public void shouldReturnZeroWhenInputThirtyTwo(){
+        assertEquals(0,new BinaryGap().solution(32));
+    }
+
+    public int solution(int N) {
+        String chars = Integer.toBinaryString(N);
+        char[] c = chars.toCharArray();
+
+        int firstIndex = 0;
+        for (int i = 0; i < c.length; i++){
+            if (c[i] == '1'){
+                firstIndex = 1;
+                break;
+            }
+        }
+
+        int currentGap = 0;
+        int biggestGap = 0;
+        for (int i = firstIndex; i < c.length; i++){
+            if (c[i] == '0'){
+                currentGap++;
+            }else {
+                if (currentGap > biggestGap){
+                    biggestGap = currentGap;
+                }
+                currentGap = 0;
+            }
+        }
+        return biggestGap;
     }
 }
