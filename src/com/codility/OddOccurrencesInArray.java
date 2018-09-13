@@ -44,34 +44,26 @@ public class OddOccurrencesInArray {
         assertEquals(7,new OddOccurrencesInArray().solution(actual));
     }
 
-    public static int solution(int[] A) {
-        HashMap<Integer,Integer> map = new HashMap<>();
+    public int solution(int[] A) {
+        // write your code in Java SE 8
 
-        for (int i = 0; i < A.length; i++) {
-           map.put(A[i],count(A,A[i]));
+        // Using the concept of "XOR" (^)
+        // when there is a pair A and B
+        // A^B will be zero
+        // A^B^C (where C is not paired),
+        // then A^B^C = C
+
+        // special case
+        if(A.length == 0)
+            return 0;
+
+        int unpaired;
+        unpaired = A[0]; // initial
+
+        for(int i=1; i< A.length; i++){
+            unpaired = unpaired ^ A[i]; // xor
         }
 
-        int minKey = 0;
-        int minValue = Integer.MAX_VALUE;
-        for (Integer name: map.keySet()){
-
-            int key =name;
-            int value = map.get(name);
-            if(value < minValue) {
-                minValue = value;
-                minKey = key;
-            }
-        }
-        return minKey;
-    }
-
-    public static int count (int[] sampled, int val) {
-        int count = 0;
-        for (int i = 0; i < sampled.length; i++) {
-            if (sampled[i] == val) {
-                count++;
-            }
-        }
-        return count;
+        return unpaired; // return the unpaired value
     }
 }
