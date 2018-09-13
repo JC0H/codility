@@ -32,7 +32,8 @@ package com.codility;
 
 import org.junit.Test;
 
-import java.util.HashSet;
+import java.util.HashMap;
+
 import static org.junit.Assert.assertEquals;
 
 public class OddOccurrencesInArray {
@@ -44,15 +45,33 @@ public class OddOccurrencesInArray {
     }
 
     public static int solution(int[] A) {
-        // write your code in Java SE 8
-        HashSet<Integer> dups = new HashSet<Integer>();
-        int elem = -1;
+        HashMap<Integer,Integer> map = new HashMap<>();
 
         for (int i = 0; i < A.length; i++) {
-            if (dups.add(A[i])) {
-                elem = A[i];
+           map.put(A[i],count(A,A[i]));
+        }
+
+        int minKey = 0;
+        int minValue = Integer.MAX_VALUE;
+        for (Integer name: map.keySet()){
+
+            int key =name;
+            int value = map.get(name);
+            if(value < minValue) {
+                minValue = value;
+                minKey = key;
             }
         }
-        return elem;
+        return minKey;
+    }
+
+    public static int count (int[] sampled, int val) {
+        int count = 0;
+        for (int i = 0; i < sampled.length; i++) {
+            if (sampled[i] == val) {
+                count++;
+            }
+        }
+        return count;
     }
 }
