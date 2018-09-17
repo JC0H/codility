@@ -49,11 +49,12 @@ public class PermMissingElem {
         long total = N * (N + 1) / 2;
 
         for (int i : A) {
-            System.out.println(total);
             total -= i;
         }
 
         return (int)total;
     }
+
+
 
 }

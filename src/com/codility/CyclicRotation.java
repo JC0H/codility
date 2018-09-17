@@ -12,7 +12,7 @@ public class CyclicRotation {
     @Test
     public void solutionTest(){
         int [] actual = new int[]{3, 8, 9, 7, 6};
-        int [] expected = new int[]{9, 7, 6, 3, 8};
+            int [] expected = new int[]{9, 7, 6, 3, 8};
         assertEquals(Arrays.toString(expected), Arrays.toString(new CyclicRotation().solution(actual,3)));
     }
 
